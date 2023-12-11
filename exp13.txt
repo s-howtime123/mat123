@@ -1,0 +1,126 @@
+/*Pizza parlor accepting maximum M orders. Orders are served in first come first served 
+basis. Order once placed cannot be cancelled. Write C++ program to simulate the system 
+using circular queue using array.*/
+
+
+
+#include <iostream>
+
+using namespace std;
+
+const int MAX_ORDERS = 10;
+
+class PizzaParlor {
+private:
+    int orders[MAX_ORDERS];
+    int front, rear;
+
+public:
+    PizzaParlor() : front(-1), rear(-1) {}
+
+    // Function to check if the circular queue is empty
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    // Function to check if the circular queue is full
+    bool isFull() {
+        return (rear + 1) % MAX_ORDERS == front;
+    }
+
+    // Function to add an order to the circular queue
+    void placeOrder(int orderNumber) {
+        if (isFull()) {
+            cout << "Sorry, the pizza parlor is currently full. Cannot accept more orders.\n";
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % MAX_ORDERS; // Circular increment
+        }
+
+        orders[rear] = orderNumber;
+        cout << "Order " << orderNumber << " placed successfully.\n";
+    }
+
+    // Function to serve an order from the circular queue
+    void serveOrder() {
+        if (isEmpty()) {
+            cout << "No orders to serve. The pizza parlor is empty.\n";
+            return;
+        }
+
+        cout << "Order " << orders[front] << " served.\n";
+
+        if (front == rear) {
+            front = rear = -1; // Reset to empty circular queue
+        } else {
+            front = (front + 1) % MAX_ORDERS; // Circular increment
+        }
+    }
+
+    // Function to display the orders in the circular queue
+    void displayOrders() {
+        if (isEmpty()) {
+            cout << "No orders to display. The pizza parlor is empty.\n";
+            return;
+        }
+
+        cout << "Orders in the pizza parlor: ";
+        int i = front;
+        do {
+            cout << orders[i] << " ";
+            i = (i + 1) % MAX_ORDERS; // Circular increment
+        } while (i != (rear + 1) % MAX_ORDERS);
+        cout << endl;
+    }
+};
+
+int main() {
+    PizzaParlor pizzaParlor;
+
+    char choice;
+    int orderNumber;
+
+    do {
+        cout << "\nChoose an option:\n";
+        cout << "1. Place a new order\n";
+        cout << "2. Serve the next order\n";
+        cout << "3. Display orders\n";
+        cout << "4. Quit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case '1':
+                if (pizzaParlor.isFull()) {
+                    cout << "Cannot place a new order. The pizza parlor is full.\n";
+                } else {
+                    cout << "Enter the order number: ";
+                    cin >> orderNumber;
+                    pizzaParlor.placeOrder(orderNumber);
+                }
+                break;
+
+            case '2':
+                pizzaParlor.serveOrder();
+                break;
+
+            case '3':
+                pizzaParlor.displayOrders();
+                break;
+
+            case '4':
+                cout << "Exiting the pizza parlor.\n";
+                break;
+
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+
+    } while (choice != '4');
+
+    return 0;
+}

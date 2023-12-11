@@ -1,0 +1,75 @@
+nc = int(input("Enter how many players play cricket: "))
+cric = [] 
+for i in range(nc):
+    nc = input("Enter the name of players who play cricket: ")
+    cric.append(nc)
+
+
+nf = int(input("Enter how many players play football: "))
+foot = []  
+for i in range(nf):
+    nf = input("Enter the name of players who play football: ")
+    foot.append(nf)
+
+
+nb = int(input("Enter how many players play badminton: "))
+bad = []  
+for i in range(nb):
+    nb = input("Enter the name of players who play badminton: ")
+    bad.append(nb)
+
+
+def inter(Ist1, Ist2):
+    Result1 = []
+    for i in Ist1:
+        if i in Ist2:
+            Result1.append(i)
+    return Result1
+
+print("The Students who play both cricket and badminton:")
+common_players = inter(cric, bad)
+print(common_players)
+
+
+def union(Ist1, Ist2):
+    Result2 = Ist1.copy()
+    for i in Ist2:
+        if i not in Result2:
+            Result2.append(i)
+    return Result2
+
+
+def diff(Ist1, Ist2):
+    Result3 = []
+    for i in Ist1:
+        if i not in Ist2:
+            Result3.append(i)
+    return Result3
+
+
+def sym_diff(Ist1, Ist2):
+    D1 = diff(Ist1, Ist2)
+    D2 = diff(Ist2, Ist1)
+    Result4 = union(D1, D2)
+    return Result4
+
+
+
+def either_cric_or_bad(cric,bad):
+   Result5 = sym_diff(cric,bad)
+   print("The Students who play either cricket or badminton but not both:",Result5)
+   return Result5
+
+
+def neither_cric_nor_foot(foot, bad, cric):
+    Result6 = diff(foot, union(bad, cric))
+    print("Number of students who play neither Cricket nor Badminton:", Result6)
+
+def cric_foot_but_not_bad(cric, foot, bad):
+    Result7 = diff(inter(cric, foot), bad)
+    print("Number of students who play cricket and football but not Badminton:", Result7)
+
+either_cric_or_bad(cric,bad)
+neither_cric_nor_foot(foot, bad, cric)
+cric_foot_but_not_bad(cric, foot, bad)
+

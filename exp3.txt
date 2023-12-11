@@ -1,0 +1,60 @@
+def input_matrix(rows, cols):
+    matrix = []
+    for i in range(rows):
+        row = [int(x) for x in input(f"Enter values for row {i + 1} (separated by space): ").split()]
+        if len(row) != cols:
+            print(f"Error: Please enter {cols} values for each row.")
+            return None
+        matrix.append(row)
+    return matrix
+
+def add_matrices(matrix1, matrix2):
+    result = [[matrix1[i][j] + matrix2[i][j] for j in range(len(matrix1[0]))] for i in range(len(matrix1))]
+    return result
+
+def subtract_matrices(matrix1, matrix2):
+    result = [[matrix1[i][j] - matrix2[i][j] for j in range(len(matrix1[0]))] for i in range(len(matrix1))]
+    return result
+
+def multiply_matrices(matrix1, matrix2):
+    result = [[sum(matrix1[i][k] * matrix2[k][j] for k in range(len(matrix2))) for j in range(len(matrix2[0]))] for i in range(len(matrix1))]
+    return result
+
+def transpose_matrix(matrix):
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+    return result
+
+# Input for matrix dimensions
+rows_a = int(input("Enter the number of rows for matrix A: "))
+cols_a = int(input("Enter the number of columns for matrix A: "))
+rows_b = int(input("Enter the number of rows for matrix B: "))
+cols_b = int(input("Enter the number of columns for matrix B: "))
+
+# Input for matrices
+matrix_a = input_matrix(rows_a, cols_a)
+matrix_b = input_matrix(rows_b, cols_b)
+
+if matrix_a is not None and matrix_b is not None:
+    # Addition
+    result_addition = add_matrices(matrix_a, matrix_b)
+    print("\nMatrix Addition:")
+    for row in result_addition:
+        print(row)
+
+    # Subtraction
+    result_subtraction = subtract_matrices(matrix_a, matrix_b)
+    print("\nMatrix Subtraction:")
+    for row in result_subtraction:
+        print(row)
+
+    # Multiplication
+    result_multiplication = multiply_matrices(matrix_a, matrix_b)
+    print("\nMatrix Multiplication:")
+    for row in result_multiplication:
+        print(row)
+
+    # Transpose
+    result_transpose = transpose_matrix(matrix_a)
+    print("\nMatrix Transpose:")
+    for row in result_transpose:
+        print(row)

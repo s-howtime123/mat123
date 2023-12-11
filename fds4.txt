@@ -1,0 +1,23 @@
+marks=[]
+n=int(input("enter the no of student"))
+for i in range (n):
+    i=int(input("enter the percentage"))
+    marks.append(i)
+print(marks)
+
+def bubble_sort(marks):
+    for i in range(n):
+        for j in range(0,n-1):
+            if marks[j]>marks[j+1]:
+                marks[j],marks[j+1]=marks[j+1],marks[j]
+    return marks
+print(bubble_sort(marks))
+
+def insertion_sort(marks):
+    for i in range(n):
+        min_value=i
+    for j in range(0,n-i-1):
+        if marks[j]>marks[min_value]:
+            marks[j],marks[min_value]=marks[min_value],marks[j]
+    return marks
+print(insertion_sort(marks))

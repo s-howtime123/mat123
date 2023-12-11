@@ -1,0 +1,45 @@
+FDS=[]
+N=int(input("Enter the total number of student : "))
+for i in range(N): 
+    marks=int(input("Enter the marks of all students :- "))
+    FDS.append(marks)
+print(FDS)
+
+
+
+def avg(FDS): 
+    a=0 
+    s=0 
+    for i in (FDS): 
+        s=s+i 
+    a=s/N
+    print("Average score of the Class is ",a)
+avg(FDS)
+
+
+def lowest (FDS):
+    max=101
+    for i in FDS: 
+        if (i<max) and (i>0):
+            max=i
+    print("The lowest score of the class is =",max)
+lowest (FDS)
+
+
+
+def highest(FDS):
+    min=0
+    for i in FDS:
+        if (i>min) and (i>0):
+            min=i
+    print("Highest score of class= ",min)
+highest(FDS)
+
+
+def cou(FDS):
+    c=0
+    for i in FDS:
+        if i==-1:
+            c=c+1
+    print("Number of absent student= ",c)
+cou (FDS)

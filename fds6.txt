@@ -1,0 +1,18 @@
+marks=[]
+n=int(input("enter the no of student"))
+for i in range (n):
+    i=int(input("enter the percentage"))
+    marks.append(i)
+print(marks)
+
+def quick_sort(marks):
+    n=len(marks)
+    if n<=1:
+        return marks
+    
+    pivot=marks[n//2]
+    left=[x for x in marks if x<pivot]
+    middle=[x for x in marks if x==pivot]
+    right=[x for x in marks if x>pivot]
+    return quick_sort(left) + middle +quick_sort(right)
+print (quick_sort(marks))

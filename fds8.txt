@@ -1,0 +1,140 @@
+#include <iostream>
+#include <unordered_set>
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class LinkedList {
+public:
+    Node* head;
+
+    LinkedList() : head(nullptr) {}
+
+    void insert(int val) {
+        Node* newNode = new Node(val);
+        newNode->next = head;
+        head = newNode;
+    }
+};
+
+void displaySet(LinkedList set) {
+    Node* current = set.head;
+    while (current != nullptr) {
+        std::cout << current->data << " ";
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+LinkedList unionSet(LinkedList setA, LinkedList setB) {
+    std::unordered_set<int> uniqueElements;
+    Node* currentA = setA.head;
+    Node* currentB = setB.head;
+
+    LinkedList result;
+
+    while (currentA != nullptr) {
+        uniqueElements.insert(currentA->data);
+        currentA = currentA->next;
+    }
+
+    while (currentB != nullptr) {
+        uniqueElements.insert(currentB->data);
+        currentB = currentB->next;
+    }
+
+    for (int element : uniqueElements) {
+        result.insert(element);
+    }
+
+    return result;
+}
+
+LinkedList intersectionSet(LinkedList setA, LinkedList setB) {
+    std::unordered_set<int> setAElements;
+    std::unordered_set<int> commonElements;
+    Node* currentA = setA.head;
+
+    while (currentA != nullptr) {
+        setAElements.insert(currentA->data);
+        currentA = currentA->next;
+    }
+
+    Node* currentB = setB.head;
+    while (currentB != nullptr) {
+        if (setAElements.find(currentB->data) != setAElements.end()) {
+            commonElements.insert(currentB->data);
+        }
+        currentB = currentB->next;
+    }
+
+    LinkedList result;
+    for (int element : commonElements) {
+        result.insert(element);
+    }
+
+    return result;
+}
+
+int main() {
+    
+    LinkedList setA, setB;
+
+    
+    setA.insert(101);
+    setA.insert(102);
+    setA.insert(103);
+
+    setB.insert(102);
+    setB.insert(104);
+    setB.insert(105);
+
+   
+    std::cout << "Set A (Vanilla): ";
+    displaySet(setA);
+
+    std::cout << "Set B (Butterscotch): ";
+    displaySet(setB);
+
+    
+    LinkedList unionResult = unionSet(setA, setB);
+    std::cout << "Union of sets A and B: ";
+    displaySet(unionResult);
+
+    
+    LinkedList intersectionResult = intersectionSet(setA, setB);
+    std::cout << "Intersection of sets A and B: ";
+    displaySet(intersectionResult);
+
+   
+    LinkedList neitherSet = unionSet(setA, setB);
+    neitherSet = unionSet(neitherSet, neitherSet);  // Clearing the set (making it an empty set)
+
+    Node* currentA = setA.head;
+    while (currentA != nullptr) {
+        neitherSet.insert(currentA->data);
+        currentA = currentA->next;
+    }
+
+    Node* currentB = setB.head;
+    while (currentB != nullptr) {
+        neitherSet.insert(currentB->data);
+        currentB = currentB->next;
+    }
+
+    std::cout << "Students who like neither Vanilla nor Butterscotch: ";
+    displaySet(neitherSet);
+
+    return 0;
+}
+
+
+
+
+
+
